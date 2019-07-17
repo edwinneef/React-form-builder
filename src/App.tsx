@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { render } from 'react-dom';
+import { WizardComponent } from './components/WizardComponent';
 
 
-render(<div>Hello!</div>, document.getElementById('main'));
+render(<WizardComponent/>, document.getElementById('main'));
