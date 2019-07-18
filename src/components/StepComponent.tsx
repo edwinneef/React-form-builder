@@ -28,6 +28,7 @@ export class StepComponent extends React.Component<StepProps, StepState> {
             return current_index == option_index ? new_option : current_option
           }
         )})}}
+        key={option_index}
         valueIsSet={this.props.checkForValue(this.props.data, option.hasValue)}
       />
     )

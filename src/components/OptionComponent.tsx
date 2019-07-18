@@ -94,7 +94,7 @@ export class OptionComponent extends React.Component<OptionProps, OptionState> {
           }
         >
           <label className="checkbox is-danger">
-            <input type="checkbox" checked={data.selected} id={data.title} />
+            <input type="checkbox" checked={data.selected} id={data.title} readOnly />
             {this.props.data.title} {this.props.data.isRequired ? " *" : null}
             {!canFill && (
               <span>
