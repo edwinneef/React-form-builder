@@ -6,6 +6,7 @@ export type OptionState = {
 export type OptionProps = {
   data: Option
   update:(new_step:Option) => void
+  valueIsSet?: boolean
 }
 
 export class OptionComponent extends React.Component<OptionProps, OptionState> {
@@ -15,26 +16,55 @@ export class OptionComponent extends React.Component<OptionProps, OptionState> {
     }
   }
   render() {
+    
     if(this.props.data.kind == "label"){
-      return <p>{this.props.data.title}</p>
+      return (
+      <div className="field">
+        <p>{this.props.data.title}</p>
+      </div>
+      )
     }
+
     if(this.props.data.kind == "input"){
-      return <div className="option_input_group"> 
-        <div className="option_input_group_title">{this.props.data.title}</div>
-        <input className="option_input_group_input" 
-               value={this.props.data.value}></input>
+      let data = this.props.data
+      return (
+
+      <div className="field"> 
+        <label className="label" htmlFor={data.title}>{this.props.data.title}</label>
+        <div className="control">
+          <input className="input" 
+            id={ data.title }
+            onChange={ e => this.props.update({...data, value: ((data.hasValue && this.props.valueIsSet) || !data.hasValue) ? e.currentTarget.value : data.value }) }
+            placeholder={ data.hasValue && !this.props.valueIsSet ? `Please fill in or check the following field: ${ data.hasValue }` : '' }
+            value={ data.value }
+            type={ data.type ? data.type : 'text' } 
+          />
+        </div>
       </div>
 
+      )
     }
+
     if(this.props.data.kind == "checkbox"){
-      return <div>
-        <input type="checkbox" checked/>
-        <label>{this.props.data.title}</label>
+      let data = this.props.data
+      return (
+
+      <div onClick={e => this.props.update({...data, selected: !data.selected})}>
+        <label className="checkbox" htmlFor={data.title}>
+          <input type="checkbox" checked={data.selected} id={data.title} />          
+          {this.props.data.title}
+        </label>
       </div>
+
+      )
     }
     
-    return <div>
+    return (
+
+    <div>
       <p>Sorry, unknown step</p>
     </div>
+    
+    )
   }
 }

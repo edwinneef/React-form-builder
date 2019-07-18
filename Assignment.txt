@@ -1,0 +1,5 @@
+Requirements:
+
+?- JSON to Wizard [optional]
+- Validation on inputs (age > 18, check if other field is filled in)
+- On submit: JSON to API

@@ -1,0 +1,42 @@
+{
+  "steps": [
+    {
+      "is_final_step": false,
+      "options": [
+        {
+          "kind": "input",
+          "type": "text",
+          "title": "Name",
+          "value": ""
+        },
+        {
+          "kind": "input",
+          "type": "text",
+          "title": "Surname",
+          "value": "",
+          "hasValue": "Name"
+        },
+        {
+          "kind": "input",
+          "type": "email",
+          "title": "Email",
+          "value": "",
+          "hasValue": "Surname"
+        }
+      ]
+    },
+    {
+      "is_final_step": false,
+      "options": [
+        { "kind": "input", "type": "number", "title": "Age", "value": "", "hasValue": "Male" },
+        { "kind": "checkbox", "title": "Male", "selected": false }
+      ]
+    },
+    {
+      "is_final_step": true,
+      "options": [
+        { "kind": "label", "title": "Thank you! Now you can submit." }
+      ]
+    }
+  ]
+}

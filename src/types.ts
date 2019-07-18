@@ -1,29 +1,61 @@
 export type Wizard = {
-    steps : Step[]
+  steps: Step[];
 }
+
 export type Step = {
-    options : Option[],
-    is_final_step:((w:Wizard) => void) | "none"
+  options: Option[];
+  is_final_step: boolean;
 }
 
 export type Option =
-    {kind:"label", title:string} |
-    {kind:"input", value:string, title:string} |
-    {kind:"checkbox", seleced:boolean, title:string}
+  | { kind: "label"; title: string; hasValue?: string }
+  | { kind: "input"; type: "text" | "email" | "number", value: string; title: string; hasValue?: string }
+  | { kind: "checkbox"; selected: boolean; title: string; hasValue?: string };
 
-
-export const fake_wizard : Wizard = {
-    steps:[
-        {is_final_step:"none", options:[
-                {kind:"input", title:"Name", value:""},
-                {kind:"input", title:"Surname", value:""},
-            ]},
-        {is_final_step:"none", options:[
-                {kind:"input", title:"Age", value:""},
-                {kind:"checkbox", title:"Male", seleced:false},
-            ]},
-        {is_final_step:(w:Wizard) => {console.log("sending info", w)}, options:[
-                {kind:"label", title:"Thank you! Now you can submit."},
-            ]},
-    ]
+export const fake_wizard: Wizard = {
+  steps: [
+    {
+      is_final_step: false,
+      options: [
+        { 
+          kind: "input", 
+          type: "text", 
+          title: "Name", 
+          value: "" 
+        },
+        { 
+          kind: "input", 
+          type: "text", 
+          title: "Surname", 
+          value: "", 
+          hasValue: "Name" 
+        }
+      ]
+    },
+    {
+      is_final_step: false,
+      options: [
+        { 
+          kind: "input", 
+          type: "text", 
+          title: "Age", 
+          value: "" 
+        },
+        { 
+          kind: "checkbox", 
+          title: "Male", 
+          selected: false 
+        }
+      ]
+    },
+    {
+      is_final_step: true,
+      options: [
+        { 
+          kind: "label", 
+          title: "Thank you! Now you can submit." 
+        }
+      ]
+    }
+  ]
 }
