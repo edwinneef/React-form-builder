@@ -2,10 +2,13 @@ import * as React from "react";
 import { Wizard, fake_wizard, Step } from "../types";
 import { StepComponent } from "./StepComponent";
 import jsonData from "./../fakeAPI.json";
+import Highlight from 'react-highlight';
+import 'highlight.js/styles/agate.css';
 
 export type WizardState = {
   data: Wizard;
   current_step: number;
+  output: string;
 };
 export type WizardProps = {};
 
@@ -14,7 +17,8 @@ export class WizardComponent extends React.Component<WizardProps, WizardState> {
     super(props);
     this.state = {
       data: jsonData,
-      current_step: 0
+      current_step: 0,
+      output: undefined
     };
   }
   render() {
@@ -26,6 +30,11 @@ export class WizardComponent extends React.Component<WizardProps, WizardState> {
     let new_current_step = current_step;
     return (
       <div className="container">
+        <div className="column is-half is-offset-one-quarter">
+        <h1 className="is-size-1 has-text-weight-bold">{this.state.output ? 'JSON output' : `Step [${this.state.current_step + 1}/${this.state.data.steps.length}]`}</h1>
+        <hr />
+        { !this.state.output &&
+        <>
         <StepComponent
           data={current_step}
           update={new_step => {
@@ -46,30 +55,31 @@ export class WizardComponent extends React.Component<WizardProps, WizardState> {
           checkForValue={(step, title) => {
             const option = step.options.find(e => e.title == title);
 
-            if (option && option.kind == "checkbox" && option.selected) {
-              return true;
-            } else if (option && option.kind == "input" && option.value != "") {
-              return true;
-            }
-
-            return false;
+            return  (option && option.kind == "checkbox" && option.selected) 
+                    || (option && option.kind == "input" && option.value != "") ? true : false
           }}
         />
-        <button
-          onClick={() =>
+        <hr />
+        <a
+          onClick={() => this.state.current_step != 0 &&
             this.setState({
               ...this.state,
               current_step: this.state.current_step - 1
             })
           }
-          disabled={this.state.current_step == 0}
+          className={`button${this.state.current_step == 0 ? ' is-static' : ''}`}
+          style={{marginRight: '3px'}}
         >
           Prev
-        </button>
-        <button
+        </a>
+        <a
           onClick={() => {
             if (new_current_step.is_final_step) {
               console.log("sending info", JSON.stringify(this.state.data));
+              this.setState({
+                ...this.state,
+                output: JSON.stringify(this.state.data, null, 2)
+              })
             } else if (
               this.state.current_step <
               this.state.data.steps.length - 1
@@ -80,11 +90,22 @@ export class WizardComponent extends React.Component<WizardProps, WizardState> {
               });
             }
           }}
+          className="button"
         >
           {this.state.current_step == this.state.data.steps.length - 1
             ? "Submit"
             : "Next"}
-        </button>
+        </a>
+        </>
+        }
+        {this.state.output &&
+            <>
+        <Highlight >
+        {`${this.state.output}`}</Highlight>
+              
+              </>
+        }
+        </div>
       </div>
     );
   }

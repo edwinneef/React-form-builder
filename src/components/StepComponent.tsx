@@ -16,7 +16,9 @@ export class StepComponent extends React.Component<StepProps, StepState> {
     this.state = {}
   }
   render() {
-    return this.props.data.options.map((option, option_index) => 
+    return (
+    <div className="step">
+      {this.props.data.options.map((option, option_index) => 
       <OptionComponent 
         data={option} 
         update={new_option => {
@@ -30,4 +32,6 @@ export class StepComponent extends React.Component<StepProps, StepState> {
       />
     )
   }
-}
+  </div>
+  )
+}}

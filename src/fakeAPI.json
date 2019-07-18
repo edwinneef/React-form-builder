@@ -7,29 +7,41 @@
           "kind": "input",
           "type": "text",
           "title": "Name",
-          "value": ""
+          "value": "",
+          "isRequired": true
         },
         {
           "kind": "input",
           "type": "text",
           "title": "Surname",
           "value": "",
-          "hasValue": "Name"
+          "hasValue": "Name",
+          "isRequired": true
+
         },
         {
           "kind": "input",
           "type": "email",
           "title": "Email",
           "value": "",
-          "hasValue": "Surname"
+          "hasValue": "Surname",
+          "isRequired": true
+
+        },
+        {
+          "kind": "textarea",
+          "title": "Message",
+          "value": "",
+          "hasValue": "Name",
+          "isRequired": false
         }
       ]
     },
     {
       "is_final_step": false,
       "options": [
-        { "kind": "input", "type": "number", "title": "Age", "value": "", "hasValue": "Male" },
-        { "kind": "checkbox", "title": "Male", "selected": false }
+        { "kind": "input", "type": "number", "title": "Age", "value": "", "isRequired": false },
+        { "kind": "checkbox", "title": "Male", "selected": false, "hasValue": "Age", "isRequired": true }
       ]
     },
     {
