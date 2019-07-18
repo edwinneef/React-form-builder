@@ -21,14 +21,21 @@ export class OptionComponent extends React.Component<OptionProps, OptionState> {
         </div>
       );
     }
-    let canFill = ((this.props.data.hasValue && this.props.valueIsSet) || !this.props.data.hasValue) ? true : false
+    const canFill: boolean =
+      (this.props.data.hasValue && this.props.valueIsSet) ||
+      !this.props.data.hasValue
+        ? true
+        : false;
+    const fillInMessage: string =
+      "Please fill in or check the following field(s):";
 
     if (this.props.data.kind == "input") {
       let data = this.props.data;
       return (
         <div className="field">
           <label className="label" htmlFor={data.title}>
-            {this.props.data.title}{this.props.data.isRequired ? ' *' : null }
+            {this.props.data.title}
+            {this.props.data.isRequired ? " *" : null}
           </label>
           <div className="control">
             <input
@@ -37,19 +44,10 @@ export class OptionComponent extends React.Component<OptionProps, OptionState> {
               onChange={e =>
                 this.props.update({
                   ...data,
-                  value:
-                    canFill
-                      ? e.currentTarget.value
-                      : data.value
+                  value: canFill ? e.currentTarget.value : data.value
                 })
               }
-              placeholder={
-                !canFill
-                  ? `Please fill in or check the following field: ${
-                      data.hasValue
-                    }`
-                  : ''
-              }
+              placeholder={!canFill ? `${fillInMessage} ${data.hasValue}` : ""}
               value={data.value}
               type={data.type ? data.type : "text"}
             />
@@ -63,7 +61,8 @@ export class OptionComponent extends React.Component<OptionProps, OptionState> {
       return (
         <div className="field">
           <label className="label" htmlFor={data.title}>
-            {this.props.data.title}{this.props.data.isRequired ? ' *' : null }
+            {this.props.data.title}
+            {this.props.data.isRequired ? " *" : null}
           </label>
           <div className="control">
             <textarea
@@ -72,19 +71,10 @@ export class OptionComponent extends React.Component<OptionProps, OptionState> {
               onChange={e =>
                 this.props.update({
                   ...data,
-                  value:
-                  canFill
-                      ? e.currentTarget.value
-                      : data.value
+                  value: canFill ? e.currentTarget.value : data.value
                 })
               }
-              placeholder={
-                !canFill
-                  ? `Please fill in or check the following field: ${
-                      data.hasValue
-                    }`
-                  : ''
-              }
+              placeholder={!canFill ? `${fillInMessage} ${data.hasValue}` : ""}
               value={data.value}
             />
           </div>
@@ -97,12 +87,21 @@ export class OptionComponent extends React.Component<OptionProps, OptionState> {
       return (
         <div
           onClick={e =>
-            this.props.update({ ...data, selected: canFill ? !data.selected : data.selected })
+            this.props.update({
+              ...data,
+              selected: canFill ? !data.selected : data.selected
+            })
           }
         >
           <label className="checkbox is-danger">
             <input type="checkbox" checked={data.selected} id={data.title} />
-            {this.props.data.title} {this.props.data.isRequired ? ' *' : null }{!canFill && <span><br />Please fill in or check the following field: {data.hasValue}</span>}
+            {this.props.data.title} {this.props.data.isRequired ? " *" : null}
+            {!canFill && (
+              <span>
+                <br />
+                {fillInMessage} {data.hasValue}
+              </span>
+            )}
           </label>
         </div>
       );

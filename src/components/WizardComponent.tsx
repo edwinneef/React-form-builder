@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Wizard, fake_wizard, Step } from "../types";
+import { Wizard, Step } from "../types";
 import { StepComponent } from "./StepComponent";
 import jsonData from "./../fakeAPI.json";
 import Highlight from 'react-highlight';
@@ -31,7 +31,7 @@ export class WizardComponent extends React.Component<WizardProps, WizardState> {
     return (
       <div className="container">
         <div className="column is-half is-offset-one-quarter">
-        <h1 className="is-size-1 has-text-weight-bold">{this.state.output ? 'JSON output' : `Step [${this.state.current_step + 1}/${this.state.data.steps.length}]`}</h1>
+        <h1 className="is-size-1 has-text-weight-bold">{this.state.output ? 'Output JSON' : `Step [${this.state.current_step + 1}/${this.state.data.steps.length}]`}</h1>
         <hr />
         { !this.state.output &&
         <>
