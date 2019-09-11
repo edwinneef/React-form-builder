@@ -34,7 +34,7 @@ export class WizardComponent extends React.Component<WizardProps, WizardState> {
         <h1 className="is-size-1 has-text-weight-bold">{this.state.output ? 'Output JSON' : `Step [${this.state.current_step + 1}/${this.state.data.steps.length}]`}</h1>
         <hr />
         { !this.state.output &&
-        <>
+        <React.Fragment>
         <StepComponent
           data={current_step}
           update={new_step => {
@@ -96,14 +96,14 @@ export class WizardComponent extends React.Component<WizardProps, WizardState> {
             ? "Submit"
             : "Next"}
         </a>
-        </>
+        </React.Fragment>
         }
         {this.state.output &&
-            <>
+            <React.Fragment>
         <Highlight >
         {`${this.state.output}`}</Highlight>
               
-              </>
+              </React.Fragment>
         }
         </div>
       </div>
